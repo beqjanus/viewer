@@ -263,7 +263,15 @@ bool LLFloaterRegionInfo::postBuild()
 
 	panel = new LLPanelRegionTerrainInfo;
 	mInfoPanels.push_back(panel);
-	panel->buildFromFile("panel_region_terrain.xml");
+    static LLCachedControl<bool> feature_pbr_terrain_transforms_enabled(gSavedSettings, "RenderTerrainPBRTransformsEnabled", false);
+    if (!feature_pbr_terrain_transforms_enabled)
+    {
+        panel->buildFromFile("panel_region_terrain.xml");
+    }
+    else
+    {
+        panel->buildFromFile("panel_region_terrain_texture_transform.xml");
+    }
 	mTab->addTabPanel(panel);
 
     mEnvironmentPanel = new LLPanelRegionEnvironment;
