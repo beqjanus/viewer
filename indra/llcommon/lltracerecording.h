@@ -592,6 +592,11 @@ namespace LLTrace
                     buf.push_back(recording.getPerSec(stat));
                 }
             }
+            
+            if (buf.empty())
+            {
+                return typename RelatedTypes<T>::fractional_t(0); // Would it be better to return NaN here?
+            }
             std::sort(buf.begin(), buf.end());
 
             return typename RelatedTypes<T>::fractional_t((buf.size() % 2 == 0) ? (buf[buf.size() / 2 - 1] + buf[buf.size() / 2]) / 2 : buf[buf.size() / 2]);
